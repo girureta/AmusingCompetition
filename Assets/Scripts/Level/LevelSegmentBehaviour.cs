@@ -25,6 +25,7 @@ public class LevelSegmentBehaviour : MonoBehaviour
         inner
     }
 
+    [SerializeField][HideInInspector]
     protected SegmentType segmentType = SegmentType.inner;
 
     public SegmentType GetSegmentType()
