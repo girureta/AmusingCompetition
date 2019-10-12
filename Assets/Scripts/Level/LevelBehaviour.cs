@@ -10,6 +10,8 @@ public class LevelBehaviour : MonoBehaviour
     /// </summary>
     protected float sizeSegmentT = 0.1f;
 
+    public EndGameTrigger endGameTrigger;
+
     private void Awake()
     {
         sizeSegmentT = 1.0f / segments.Length;
