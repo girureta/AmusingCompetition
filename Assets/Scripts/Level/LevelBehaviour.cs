@@ -14,14 +14,34 @@ public class LevelBehaviour : MonoBehaviour
     {
         sizeSegmentT = 1.0f / segments.Length;
     }
+
+    //Calculates the new position and rotation of the player given a desired displacement
+    public void MoveOnTheLevel(float displacement,ref float t,ref Vector3 newPosition,ref Quaternion rotation)
+    {
+        //Placeholder implementation
+        Vector3 oldPosition = newPosition;
+        t = Mathf.Clamp01(t+0.1f * Time.deltaTime);
+
+        newPosition = EvaluateSegments(t);
+
+        Vector3 dir = newPosition - oldPosition;
+        if (dir != Vector3.zero)
+        {
+            rotation = Quaternion.LookRotation(dir, Vector3.up);
+        }
+    }
+
     public Vector3 EvaluateSegments(float t)
     {
         Vector3 result = Vector3.zero;
+        int segmentIndex = Mathf.FloorToInt(((float)segments.Length) * t);
 
-        float tt = ((float)segments.Length) * t;
-        int segmentIndex = Mathf.FloorToInt(tt);
+        if (segmentIndex == segments.Length)
+        {
+            segmentIndex--;
+        }
 
-        //Transfor composite T to segment's
+        //Transform composite T to segment's
         float lowerT = sizeSegmentT * segmentIndex;
         float localT = (t - lowerT) / sizeSegmentT;
 
