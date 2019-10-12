@@ -27,6 +27,8 @@ public class GameRun : MonoBehaviour
     //Current position of the player in composite bezier space
     protected float currentT = 0.0f;
 
+    protected float starTime = 0.0f;
+
     public void Prepare()
     {
         playerInstance = Instantiate(playerPrefab);
@@ -35,6 +37,7 @@ public class GameRun : MonoBehaviour
 
     public void StartGame()
     {
+        starTime = Time.time;
         gameScore = new GameScore();
         currentState = State.running;
         levelInstance.endGameTrigger.OnEndGameTriggered.AddListener(OnEndGameTriggered);
@@ -48,7 +51,7 @@ public class GameRun : MonoBehaviour
                 break;
             case State.running:
                 levelInstance.endGameTrigger.OnEndGameTriggered.RemoveListener(OnEndGameTriggered);
-                currentState = State.finished;
+                currentState = State.finished;       
                 OnGameEnded.Invoke(gameScore);
                 break;
             default:
@@ -64,6 +67,7 @@ public class GameRun : MonoBehaviour
             case State.idle:
                 break;
             case State.running:
+                gameScore.points = Mathf.CeilToInt(Time.time - starTime);
                 UpdatePlayerPosition();
                 break;
             default:
