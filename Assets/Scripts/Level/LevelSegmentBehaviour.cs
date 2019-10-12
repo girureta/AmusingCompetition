@@ -51,18 +51,7 @@ public class LevelSegmentBehaviour : MonoBehaviour
 
     public Transform GetStartTangent()
     {
-        Transform point = null;
-        switch (segmentType)
-        {
-            case SegmentType.start:
-                point = startTangent;
-                break;
-            case SegmentType.inner:
-                point = previousSegment.endTangent;
-                break;
-            default:
-                break;
-        }
+        Transform point = point = startTangent;
         return point;
     }
 
@@ -96,9 +85,9 @@ public class LevelSegmentBehaviour : MonoBehaviour
         segment.endPoint.localRotation = Quaternion.identity;
 
         segment.endTangent = new GameObject("EndTangent").transform;
-        segment.endTangent.SetParent(segment.endPoint);
-        segment.endTangent.localPosition = Vector3.zero;
-        segment.endTangent.localRotation = Quaternion.identity;
+        segment.endTangent.SetParent(segment.transform);
+        segment.endTangent.position = segment.endPoint.position;
+        segment.endTangent.rotation = segment.endPoint.rotation;
 
         if (segmentType == SegmentType.start)
         {
@@ -106,12 +95,12 @@ public class LevelSegmentBehaviour : MonoBehaviour
             segment.startPoint.SetParent(segment.transform);
             segment.startPoint.localPosition = Vector3.zero;
             segment.startPoint.localRotation = Quaternion.identity;
-
-            segment.startTangent = new GameObject("StartTangent").transform;
-            segment.startTangent.SetParent(segment.startPoint);
-            segment.startTangent.localPosition = Vector3.zero;
-            segment.startTangent.localRotation = Quaternion.identity;
         }
+
+        segment.startTangent = new GameObject("StartTangent").transform;
+        segment.startTangent.SetParent(segment.transform);
+        segment.startTangent.localPosition = Vector3.zero;
+        segment.startTangent.localRotation = Quaternion.identity;
 
         segmentGO.SetActive(true);
         return segment;
