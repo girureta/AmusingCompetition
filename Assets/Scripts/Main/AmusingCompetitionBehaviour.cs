@@ -43,6 +43,7 @@ public class AmusingCompetitionBehaviour : MonoBehaviour
         currentGameRun.playerPrefab = selectedPlayerPrefab;
         currentGameRun.levelPrefab = levelSet.levels[currentLevel];
         currentGameRun.Prepare();
+        mainCamera.FollowPlayer(currentGameRun.GetPlayerInstance());
         currentState = State.waitForTap;
     }
 
