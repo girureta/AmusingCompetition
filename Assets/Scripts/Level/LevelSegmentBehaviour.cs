@@ -2,11 +2,17 @@
 
 public class LevelSegmentBehaviour : MonoBehaviour
 {
-    public Transform startPoint;
-    public Transform startTangent;
+    [SerializeField]
+    protected Transform startPoint;
 
-    public Transform endPoint;
-    public Transform endTangent;
+    [SerializeField]
+    protected Transform startTangent;
+
+    [SerializeField]
+    protected Transform endPoint;
+
+    [SerializeField]
+    protected Transform endTangent;
 
     public LevelSegmentBehaviour previousSegment;
 
@@ -26,6 +32,52 @@ public class LevelSegmentBehaviour : MonoBehaviour
         return segmentType;
     }
 
+    public Transform GetStartPoint()
+    {
+        Transform point = null;
+        switch (segmentType)
+        {
+            case SegmentType.start:
+                point = startPoint;
+                break;
+            case SegmentType.inner:
+                point = previousSegment.endPoint;
+                break;
+            default:
+                break;
+        }
+        return point;
+    }
+
+    public Transform GetStartTangent()
+    {
+        Transform point = null;
+        switch (segmentType)
+        {
+            case SegmentType.start:
+                point = startTangent;
+                break;
+            case SegmentType.inner:
+                point = previousSegment.endTangent;
+                break;
+            default:
+                break;
+        }
+        return point;
+    }
+
+    public Transform GetEndPoint()
+    {
+        Transform point = endPoint;
+        return point;
+    }
+
+    public Transform GetEndTangent()
+    {
+        Transform point = endTangent;
+        return point;
+    }
+
     /// <summary>
     /// Create a Segment with its helper transform taking into account the type of the segment
     /// </summary>
@@ -37,13 +89,13 @@ public class LevelSegmentBehaviour : MonoBehaviour
         segmentGO.SetActive(false);
 
         LevelSegmentBehaviour segment = segmentGO.AddComponent<LevelSegmentBehaviour>();
-
+        segment.segmentType = segmentType;
         segment.endPoint = new GameObject("EndPoint").transform;
         segment.endPoint.SetParent(segment.transform);
         segment.endPoint.localPosition = Vector3.forward * 2;
         segment.endPoint.localRotation = Quaternion.identity;
 
-        segment.endTangent = new GameObject("EndTanget").transform;
+        segment.endTangent = new GameObject("EndTangent").transform;
         segment.endTangent.SetParent(segment.endPoint);
         segment.endTangent.localPosition = Vector3.zero;
         segment.endTangent.localRotation = Quaternion.identity;

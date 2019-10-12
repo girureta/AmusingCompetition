@@ -10,10 +10,10 @@ public class LevelSegmentBehaviourEditor : Editor
     {
         LevelSegmentBehaviour segment = target as LevelSegmentBehaviour;
 
-        segment.startPoint.position = Handles.PositionHandle(segment.startPoint.position, Quaternion.identity);
-        segment.endPoint.position = Handles.PositionHandle(segment.endPoint.position, Quaternion.identity);
-        segment.startTangent.position = Handles.PositionHandle(segment.startTangent.position, Quaternion.identity);
-        segment.endTangent.position = Handles.PositionHandle(segment.endTangent.position, Quaternion.identity);
+        segment.GetStartPoint().position = Handles.PositionHandle(segment.GetStartPoint().position, Quaternion.identity);
+        segment.GetEndPoint().position = Handles.PositionHandle(segment.GetEndPoint().position, Quaternion.identity);
+        segment.GetStartTangent().position = Handles.PositionHandle(segment.GetStartTangent().position, Quaternion.identity);
+        segment.GetEndTangent().position = Handles.PositionHandle(segment.GetEndTangent().position, Quaternion.identity);
     }
 
     [DrawGizmo(GizmoType.InSelectionHierarchy | GizmoType.NotInSelectionHierarchy)]
@@ -21,8 +21,8 @@ public class LevelSegmentBehaviourEditor : Editor
     {
         GUIStyle style = new GUIStyle();
         style.normal.textColor = Color.blue;
-        Handles.Label(segment.startPoint.position, segment.name, style);
-        Handles.DrawBezier(segment.startPoint.position, segment.endPoint.position, segment.startTangent.position, segment.endTangent.position, Color.red, null, 2f);
+        Handles.Label(segment.GetStartPoint().position, segment.name, style);
+        Handles.DrawBezier(segment.GetStartPoint().position, segment.GetEndPoint().position, segment.GetStartTangent().position, segment.GetEndTangent().position, Color.red, null, 2f);
     }
 
     void OnEnable()
