@@ -59,6 +59,11 @@ public class GameRun : MonoBehaviour
         }
     }
 
+    public PlayerBehaviour GetPlayerInstance()
+    {
+        return playerInstance;
+    }
+
     // Update is called once per frame
     void Update()
     {

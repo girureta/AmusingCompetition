@@ -15,7 +15,6 @@ public class AmusingCompetitionUIBehaviour : MonoBehaviour
         tapPanel.Show();
         endScreenPanel.Hide();
         adPanel.Hide();
-        controller.OnShowAd.AddListener(ShowAd);
         controller.OnShowEndScreen.AddListener(OnShowEndScreen);
         controller.OnGameStarted.AddListener(OnGameStarted);
     }
@@ -30,9 +29,18 @@ public class AmusingCompetitionUIBehaviour : MonoBehaviour
         tapPanel.Hide();
     }
 
-    protected void ShowAd()
+    public void ShowAd()
     {
+        endScreenPanel.Hide();
         adPanel.Show();
+        StartCoroutine(CRHideAdPanel());
+    }
+
+    protected IEnumerator CRHideAdPanel()
+    {
+        yield return new WaitForSeconds(2.0f);
+        adPanel.Hide();
+        StartLevel();
     }
 
     protected void OnShowEndScreen(GameScore score)

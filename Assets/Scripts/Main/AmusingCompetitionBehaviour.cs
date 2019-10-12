@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 public class AmusingCompetitionBehaviour : MonoBehaviour
@@ -13,9 +11,7 @@ public class AmusingCompetitionBehaviour : MonoBehaviour
     protected GameRun currentGameRun = null;
 
     public UnityEvent OnGameStarted = new UnityEvent();
-    public GameScoreEvent OnGameEnded = new GameScoreEvent();
     public GameScoreEvent OnShowEndScreen = new GameScoreEvent();
-    public UnityEvent OnShowAd = new UnityEvent();
 
     protected enum State
     {
