@@ -60,8 +60,8 @@ public class AmusingCompetitionBehaviour : MonoBehaviour
     {
         currentGameRun.OnGameEnded.RemoveListener(OnGameFinished);
         currentState = State.showingEndScreen;
+        OnShowEndScreen.Invoke(gameScore);
     }
-
 
     // Update is called once per frame
     void Update()

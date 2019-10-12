@@ -12,11 +12,14 @@ public class GameRun : MonoBehaviour
     public GameScoreEvent OnGameScoreUpdate = new GameScoreEvent();
     public GameScoreEvent OnGameEnded = new GameScoreEvent();
 
+    public GameScore gameScore;
+
     [System.Serializable]
     public enum State
     {
         idle,
-        running
+        running,
+        finished
     }
 
     protected State currentState = State.idle;
@@ -32,7 +35,25 @@ public class GameRun : MonoBehaviour
 
     public void StartGame()
     {
+        gameScore = new GameScore();
         currentState = State.running;
+        levelInstance.endGameTrigger.OnEndGameTriggered.AddListener(OnEndGameTriggered);
+    }
+
+    protected void OnEndGameTriggered()
+    {  
+        switch (currentState)
+        {
+            case State.idle:
+                break;
+            case State.running:
+                levelInstance.endGameTrigger.OnEndGameTriggered.RemoveListener(OnEndGameTriggered);
+                currentState = State.finished;
+                OnGameEnded.Invoke(gameScore);
+                break;
+            default:
+                break;
+        }
     }
 
     // Update is called once per frame
