@@ -27,7 +27,7 @@ public class LevelBehaviour : MonoBehaviour
             segmentList.Add(newSegment);
             segments = segmentList.ToArray();
         }
-
+        newSegment.transform.SetParent(transform);
     }
 #endif
 }
